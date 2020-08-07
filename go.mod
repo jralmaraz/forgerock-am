@@ -1,8 +1,8 @@
-module github.com/deloitte-au-cyber-risk-services/forgerock-terraform-provider
+module forgerock-terraform-provider
 
-go 1.14
+go 1.13
 
 require (
-	github.com/hashicorp/terraform v0.12.24
-	github.com/hashicorp/terraform-plugin-sdk v1.9.0
+	github.com/hashicorp/terraform v0.12.29
+	github.com/hashicorp/terraform-plugin-sdk/v2 v2.0.0
 )
