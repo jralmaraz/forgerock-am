@@ -8,8 +8,8 @@ terraform {
 }
 
 provider "accessmanager" {
-  xopenamusername = "amadmin"
-  xopenampassword = "knzn2avs0peeyuc8hi7zwq4vd7ym0sec"
+  xopenamusername = ""
+  xopenampassword = ""
 }
 
 module "realm" {
