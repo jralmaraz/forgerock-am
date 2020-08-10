@@ -2,6 +2,7 @@ package accessmanager
 
 import (
 	"context"
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -29,7 +30,7 @@ func dataSourceRealms() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"parentPath": &schema.Schema{
+						"parentpath": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 							Optional: true,
@@ -50,6 +51,7 @@ func dataSourceRealms() *schema.Resource {
 									"alias": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
+										Optional: true,
 									},
 								},
 							},
@@ -62,7 +64,14 @@ func dataSourceRealms() *schema.Resource {
 }
 
 func dataSourceRealmsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := &http.Client{Timeout: 10 * time.Second}
+	//client := &http.Client{Timeout: 10 * time.Second},
+	client := &http.Client{
+		Transport: &http.Transport{
+			TLSClientConfig: &tls.Config{
+				InsecureSkipVerify: true, // test server certificate is not trusted.
+			},
+		},
+	}
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
