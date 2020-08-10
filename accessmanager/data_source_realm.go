@@ -32,6 +32,7 @@ func dataSourceRealms() *schema.Resource {
 						"parentPath": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
+							Optional: true,
 						},
 						"active": &schema.Schema{
 							Type:     schema.TypeBool,
