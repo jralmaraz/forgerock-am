@@ -1,4 +1,4 @@
-package accessmanager
+package clients/accessmanager
 
 import (
 	"encoding/json"

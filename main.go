@@ -1,7 +1,7 @@
 package main
 
 import (
-	"forgerock-terraform-provider/accessmanager"
+	"github.com/jralmaraz/forgerock-terraform-provider/accessmanager"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/plugin"

@@ -5,7 +5,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 
-	"forgerock-terraform-provider/clients/accessmanager"
+	"github.com/jralmaraz/forgerock-terraform-provider/clients/accessmanager"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
