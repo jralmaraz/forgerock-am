@@ -64,6 +64,23 @@ func dataSourceRealms() *schema.Resource {
 }
 
 func dataSourceRealmsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+
+	type Response struct {
+		Result []struct {
+			ID         string      `json:"_id"`
+			Rev        string      `json:"_rev"`
+			ParentPath interface{} `json:"parentPath"`
+			Active     bool        `json:"active"`
+			Name       string      `json:"name"`
+			Aliases    []string    `json:"aliases"`
+		} `json:"result"`
+		ResultCount             int         `json:"resultCount"`
+		PagedResultsCookie      interface{} `json:"pagedResultsCookie"`
+		TotalPagedResultsPolicy string      `json:"totalPagedResultsPolicy"`
+		TotalPagedResults       int         `json:"totalPagedResults"`
+		RemainingPagedResults   int         `json:"remainingPagedResults"`
+	}
+
 	//client := &http.Client{Timeout: 10 * time.Second},
 	client := &http.Client{
 		Transport: &http.Transport{
@@ -87,7 +104,9 @@ func dataSourceRealmsRead(ctx context.Context, d *schema.ResourceData, m interfa
 	}
 	defer r.Body.Close()
 
-	realms := make([]map[string]interface{}, 0)
+	//realms := make([]map[string]interface{}, 0)
+	realms := new(Response)
+
 	err = json.NewDecoder(r.Body).Decode(&realms)
 	if err != nil {
 		return diag.FromErr(err)
