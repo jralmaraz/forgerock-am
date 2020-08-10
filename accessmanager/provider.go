@@ -49,7 +49,7 @@ func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}
 	var diags diag.Diagnostics
 
 	if (xopenamusername != "") && (xopenampassword != "") { //&& (amadminSsotoken != "") {
-		c, err := accessmanager.NewClient(nil, &xopenamusername, &xopenampassword)
+		c, err := accessmanagerclient.NewClient(nil, &xopenamusername, &xopenampassword)
 		if err != nil {
 			return nil, diag.FromErr(err)
 		}
@@ -57,7 +57,7 @@ func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}
 		return c, diags
 	}
 
-	c, err := accessmanager.NewClient(nil, nil, nil)
+	c, err := accessmanagerclient.NewClient(nil, nil, nil)
 	if err != nil {
 		return nil, diag.FromErr(err)
 	}

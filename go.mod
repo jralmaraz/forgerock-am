@@ -1,4 +1,4 @@
-module forgerock-terraform-provider
+module github.com/jralmaraz/forgerock-terraform-provider
 
 go 1.13
 
