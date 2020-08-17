@@ -147,6 +147,8 @@ github.com/hashicorp/hil
 github.com/hashicorp/hil/ast
 github.com/hashicorp/hil/parser
 github.com/hashicorp/hil/scanner
+# github.com/hashicorp/logutils v1.0.0
+github.com/hashicorp/logutils
 # github.com/hashicorp/terraform v0.12.29
 github.com/hashicorp/terraform/addrs
 github.com/hashicorp/terraform/config
@@ -178,6 +180,8 @@ github.com/hashicorp/terraform/states/statefile
 github.com/hashicorp/terraform/terraform
 github.com/hashicorp/terraform/tfdiags
 github.com/hashicorp/terraform/version
+# github.com/hashicorp/terraform-plugin-sdk v1.15.0
+github.com/hashicorp/terraform-plugin-sdk/helper/logging
 # github.com/hashicorp/terraform-plugin-sdk/v2 v2.0.0
 github.com/hashicorp/terraform-plugin-sdk/v2/diag
 github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema
@@ -233,7 +237,7 @@ github.com/posener/complete
 github.com/posener/complete/cmd
 github.com/posener/complete/cmd/install
 github.com/posener/complete/match
-# github.com/spf13/afero v1.2.1
+# github.com/spf13/afero v1.2.2
 github.com/spf13/afero
 github.com/spf13/afero/mem
 # github.com/ulikunitz/xz v0.5.7

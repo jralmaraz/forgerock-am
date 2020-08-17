@@ -1,7 +1,7 @@
 TEST?=$$(go list ./... | grep -v 'vendor')
 HOSTNAME=github.com
 NAMESPACE=jralmaraz
-NAME=accessmanager
+NAME=forgerock-am-terraform-provider
 BINARY=${NAME}
 VERSION=0.1
 OS_ARCH=darwin_amd64
