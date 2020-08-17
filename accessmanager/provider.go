@@ -7,7 +7,6 @@ import (
 
 	accessmanagerclient "github.com/jralmaraz/forgerock-go-sdk/clients/accessmanager"
 
-	"github.com/hashicorp/terraform-plugin-sdk/helper/logging"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -59,7 +58,6 @@ func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}
 	}
 
 	c, err := accessmanagerclient.NewClient(nil, nil, nil)
-	c.Transport = logging.NewTransport("ForgeRock", client.Transport)
 	if err != nil {
 		return nil, diag.FromErr(err)
 	}
