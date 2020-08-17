@@ -110,7 +110,8 @@ func dataSourceRealmsRead(ctx context.Context, d *schema.ResourceData, m interfa
 
 	if err := json.NewDecoder(r.Body).Decode(realms); err != nil {
 		log.Fatal(err)
-		log.Output(err)
+		log.Output(2, err)
+
 	}
 	for i := range realms.Result {
 		fmt.Printf("%v\n", realms.Result[i])
