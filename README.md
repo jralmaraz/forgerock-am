@@ -11,9 +11,7 @@ Resources would cover managing configurations for the following products:
 - Directory Services ? Need to evaluate feasibility of developing it
 
 ## ToC
-
-1. [Disaster Recovery SLA](#disaster-recovery-sla)
-2. [SDK](#sdk)
+1. [SDK](#sdk)
 
 
 # SDK
