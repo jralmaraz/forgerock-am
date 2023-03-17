@@ -1,8 +1,8 @@
 TEST?=$$(go list ./... | grep -v 'vendor')
 HOSTNAME=github.com
 NAMESPACE=jralmaraz
-NAME=forgerock-am-terraform-provider
-BINARY=${NAME}
+NAME=forgerock-am
+BINARY=terraform-provider-${NAME}
 VERSION=0.1
 OS_ARCH=darwin_amd64
 

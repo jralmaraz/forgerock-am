@@ -1,15 +1,15 @@
 terraform {
   required_providers {
     accessmanager = {
-      versions = ["0.1"]
-      source = "github.com/jralmaraz/accessmanager"
+      version = "0.1"
+      source = "github.com/jralmaraz/forgerock-am"
     }
   }
 }
 
 provider "accessmanager" {
-  xopenamusername = ""
-  xopenampassword = ""
+  xopenamusername = "amadmin"
+  xopenampassword = "TJUQzLoKOWHS937lEp3rWXJs"
 }
 
 module "realm" {
