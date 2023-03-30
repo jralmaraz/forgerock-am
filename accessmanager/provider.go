@@ -14,12 +14,12 @@ import (
 func Provider() *schema.Provider {
 	return &schema.Provider{
 		Schema: map[string]*schema.Schema{
-			"xopenamusername": &schema.Schema{
+			"username": {
 				Type:        schema.TypeString,
 				Optional:    true,
 				DefaultFunc: schema.EnvDefaultFunc("XOpenAMUsername", nil),
 			},
-			"xopenampassword": &schema.Schema{
+			"password": {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Sensitive:   true,
@@ -41,15 +41,15 @@ func Provider() *schema.Provider {
 }
 
 func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
-	xopenamusername := d.Get("xopenamusername").(string)
-	xopenampassword := d.Get("xopenampassword").(string)
+	username := d.Get("username").(string)
+	password := d.Get("password").(string)
 	//amadminSsotoken := d.Get("amadmin_ssotoken").(string)
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
-	if (xopenamusername != "") && (xopenampassword != "") { //&& (amadminSsotoken != "") {
-		c, err := accessmanagerclient.NewClient(nil, &xopenamusername, &xopenampassword)
+	if (username != "") && (password != "") { //&& (amadminSsotoken != "") {
+		c, err := accessmanagerclient.NewClient(nil, &username, &password)
 		if err != nil {
 			return nil, diag.FromErr(err)
 		}

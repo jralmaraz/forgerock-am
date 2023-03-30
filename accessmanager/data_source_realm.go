@@ -19,38 +19,38 @@ func dataSourceRealms() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceRealmsRead,
 		Schema: map[string]*schema.Schema{
-			"realms": &schema.Schema{
+			"realms": {
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"_id": &schema.Schema{
+						"_id": {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"_rev": &schema.Schema{
+						"_rev": {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"parentpath": &schema.Schema{
+						"parentpath": {
 							Type:     schema.TypeString,
 							Computed: true,
 							Optional: true,
 						},
-						"active": &schema.Schema{
+						"active": {
 							Type:     schema.TypeBool,
 							Computed: true,
 						},
-						"name": &schema.Schema{
+						"name": {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"aliases": &schema.Schema{
+						"aliases": {
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
-									"alias": &schema.Schema{
+									"alias": {
 										Type:     schema.TypeString,
 										Computed: true,
 										Optional: true,
