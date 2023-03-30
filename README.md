@@ -21,3 +21,25 @@ Given each product may have specific ways for authenticate or perform other spec
 # Debugging
 
 https://developer.hashicorp.com/terraform/plugin/debugging#visual-studio-code
+
+# Test 
+
+```shell
+make install
+
+cd examples && rm .terraform.lock.hcl && terraform init
+
+Add credentials to provider config on examples/main.tf
+
+provider "accessmanager" {
+    username = "bla"
+    password = "bla"
+}
+
+Yet to figure out why environment variables are not working as `schema.EnvDefaultFunc` should take care of it when not set in provider config:
+
+ export XOpenAMUsername="bla"
+ export XOpenAMPassword="bla"
+
+terraform plan
+ ```
