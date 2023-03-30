@@ -2,7 +2,6 @@ package accessmanager
 
 import (
 	"context"
-	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -85,12 +84,6 @@ func dataSourceRealmsRead(ctx context.Context, d *schema.ResourceData, m interfa
 
 	client := m.(*amclient.Client)
 
-	client.HTTPClient.Transport = &http.Transport{
-		TLSClientConfig: &tls.Config{
-			InsecureSkipVerify: true, // test server certificate is not trusted.
-		},
-	}
-
 	// client.Transport = logging.NewTransport("ForgeRock", client.Transport)
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
@@ -125,6 +118,8 @@ func dataSourceRealmsRead(ctx context.Context, d *schema.ResourceData, m interfa
 	//	return diag.FromErr(err)
 	//}
 
+	//TODO: FIX mapping
+	//│ Error: realms: '': source data must be an array or slice, got struct
 	if err := d.Set("realms", realms); err != nil {
 		return diag.FromErr(err)
 	}

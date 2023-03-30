@@ -7,7 +7,10 @@ terraform {
   }
 }
 
-provider "accessmanager" {}
+provider "accessmanager" {
+  username =  "amadmin"
+  password = "TJUQzLoKOWHS937lEp3rWXJs"
+}
 
 module "realm" {
   source = "./realm"

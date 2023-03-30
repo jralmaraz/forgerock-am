@@ -17,3 +17,7 @@ Resources would cover managing configurations for the following products:
 # SDK
 
 Given each product may have specific ways for authenticate or perform other specific tasks, there is a separate SDK repository where those are implemented. It can be found at [ForgeRock golang SDK](https://github.com/jralmaraz/forgerock-go-sdk)
+
+# Debugging
+
+https://developer.hashicorp.com/terraform/plugin/debugging#visual-studio-code
