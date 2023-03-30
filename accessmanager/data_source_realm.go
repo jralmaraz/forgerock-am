@@ -47,14 +47,8 @@ func dataSourceRealms() *schema.Resource {
 						"aliases": {
 							Type:     schema.TypeList,
 							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-									"alias": {
-										Type:     schema.TypeString,
-										Computed: true,
-										Optional: true,
-									},
-								},
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
 							},
 						},
 					},
@@ -66,14 +60,23 @@ func dataSourceRealms() *schema.Resource {
 
 func dataSourceRealmsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
+	type Realm struct {
+		_id        string              `json:"_id"`
+		_rev       string              `json:"_rev"`
+		parentpath interface{}         `json:"parentpath"`
+		active     bool                `json:"active"`
+		name       string              `json:"name"`
+		aliases    []map[string]string `json:"aliases"`
+	}
+
 	type Response struct {
 		Result []struct {
-			ID         string      `json:"_id"`
-			Rev        string      `json:"_rev"`
-			ParentPath interface{} `json:"parentPath"`
-			Active     bool        `json:"active"`
-			Name       string      `json:"name"`
-			Aliases    []string    `json:"aliases"`
+			_id        string              `json:"_id"`
+			_rev       string              `json:"_rev"`
+			parentpath string              `json:"parentpath"`
+			active     bool                `json:"active"`
+			name       string              `json:"name"`
+			aliases    []map[string]string `json:"aliases"`
 		} `json:"result"`
 		ResultCount             int         `json:"resultCount"`
 		PagedResultsCookie      interface{} `json:"pagedResultsCookie"`
@@ -100,27 +103,24 @@ func dataSourceRealmsRead(ctx context.Context, d *schema.ResourceData, m interfa
 		return diag.FromErr(err)
 	}
 
-	//realms := make([]map[string]interface{}, 0)
 	realms := new(Response)
 
 	if err := json.Unmarshal(r, &realms); err != nil {
 		diag.FromErr(err)
-		//log.Output(2, err)
-
 	}
 
-	for i := range realms.Result {
-		fmt.Printf("%v\n", realms.Result[i])
+	if len(realms.Result) == 0 {
+		// Set an empty slice to the 'realms' key
+		if err := d.Set("realms", []interface{}{}); err != nil {
+			return diag.FromErr(err)
+		}
 	}
 
-	//err = json.NewDecoder(r.Body).Decode(&realms)
-	//if err != nil {
-	//	return diag.FromErr(err)
-	//}
+	// realmSlice := make([]map[string]interface{}, len(realms.Result))
 
 	//TODO: FIX mapping
 	//│ Error: realms: '': source data must be an array or slice, got struct
-	if err := d.Set("realms", realms); err != nil {
+	if err := d.Set("realms", realms.Result); err != nil {
 		return diag.FromErr(err)
 	}
 
