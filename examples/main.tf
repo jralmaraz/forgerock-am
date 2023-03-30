@@ -7,10 +7,7 @@ terraform {
   }
 }
 
-provider "accessmanager" {
-  xopenamusername = "amadmin"
-  xopenampassword = "TJUQzLoKOWHS937lEp3rWXJs"
-}
+provider "accessmanager" {}
 
 module "realm" {
   source = "./realm"

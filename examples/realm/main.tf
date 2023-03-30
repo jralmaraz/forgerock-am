@@ -1,7 +1,6 @@
 terraform {
   required_providers {
     accessmanager = {
-      version = "0.1"
       source = "github.com/jralmaraz/forgerock-am"
     }
   }

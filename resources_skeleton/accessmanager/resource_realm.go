@@ -1,6 +1,9 @@
 package accessmanager
 
-import "github.com/hashicorp/terraform/helper/schema"
+import (
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	amclient "github.com/jralmaraz/forgerock-go-sdk"
+)
 
 func resourceRealm() *schema.Resource {
 	return &schema.Resource{
@@ -37,7 +40,7 @@ func resourceRealmCreate(d *schema.ResourceData, m interface{}) error {
 }
 
 func resourceRealmRead(d *schema.ResourceData, m interface{}) error {
-	client := m.(*MyClient)
+	client := m.(*amclient.Client)
 
 	// Attempt to read from an upstream API
 	obj, ok := client.Get(d.Id())
@@ -55,24 +58,25 @@ func resourceRealmRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func resourceRealmUpdate(d *schema.ResourceData, m interface{}) error {
-	d.Partial(true)
+	// d.Partial(true)
 
-	if d.HasChange("realm") {
-		// Try updating the address
-		if err := updateRealm(d, m); err != nil {
-			return err
-		}
+	// if d.HasChange("realm") {
+	// 	// Try updating the address
+	// 	if err := updateRealm(d, m); err != nil {
+	// 		return err
+	// 	}
 
-		d.SetPartial("realm")
-	}
+	// 	d.SetPartial("realm")
+	// }
 
-	// If we were to return here, before disabling partial mode below,
-	// then only the "address" field would be saved.
+	// // If we were to return here, before disabling partial mode below,
+	// // then only the "address" field would be saved.
 
-	// We succeeded, disable partial mode. This causes Terraform to save
-	// all fields again.
-	d.Partial(false)
+	// // We succeeded, disable partial mode. This causes Terraform to save
+	// // all fields again.
+	// d.Partial(false)
 
+	// return resourceRealmRead(d, m)
 	return resourceRealmRead(d, m)
 }
 

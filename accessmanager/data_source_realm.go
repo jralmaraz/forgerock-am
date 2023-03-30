@@ -5,13 +5,14 @@ import (
 	"crypto/tls"
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
+	"strconv"
+	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/hashicorp/terraform-plugin-sdk/helper/logging"
+	amclient "github.com/jralmaraz/forgerock-go-sdk"
 )
 
 func dataSourceRealms() *schema.Resource {
@@ -82,15 +83,15 @@ func dataSourceRealmsRead(ctx context.Context, d *schema.ResourceData, m interfa
 		RemainingPagedResults   int         `json:"remainingPagedResults"`
 	}
 
-	//client := &http.Client{Timeout: 10 * time.Second},
-	client := &http.Client{
-		Transport: &http.Transport{
-			TLSClientConfig: &tls.Config{
-				InsecureSkipVerify: true, // test server certificate is not trusted.
-			},
+	client := m.(*amclient.Client)
+
+	client.HTTPClient.Transport = &http.Transport{
+		TLSClientConfig: &tls.Config{
+			InsecureSkipVerify: true, // test server certificate is not trusted.
 		},
 	}
-	client.Transport = logging.NewTransport("ForgeRock", client.Transport)
+
+	// client.Transport = logging.NewTransport("ForgeRock", client.Transport)
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
@@ -99,20 +100,22 @@ func dataSourceRealmsRead(ctx context.Context, d *schema.ResourceData, m interfa
 		return diag.FromErr(err)
 	}
 
-	r, err := client.Do(req)
+	//Just to test without releasing a new client version
+	req.Header.Set("Accept-API-Version", "resource=1.0, protocol=2.1")
+	r, err := client.DoRequest(req)
 	if err != nil {
 		return diag.FromErr(err)
 	}
-	defer r.Body.Close()
 
 	//realms := make([]map[string]interface{}, 0)
 	realms := new(Response)
 
-	if err := json.NewDecoder(r.Body).Decode(realms); err != nil {
-		log.Fatal(err)
+	if err := json.Unmarshal(r, &realms); err != nil {
+		diag.FromErr(err)
 		//log.Output(2, err)
 
 	}
+
 	for i := range realms.Result {
 		fmt.Printf("%v\n", realms.Result[i])
 	}
@@ -122,12 +125,12 @@ func dataSourceRealmsRead(ctx context.Context, d *schema.ResourceData, m interfa
 	//	return diag.FromErr(err)
 	//}
 
-	//if err := d.Set("realms", realms); err != nil {
-	//	return diag.FromErr(err)
-	//}
+	if err := d.Set("realms", realms); err != nil {
+		return diag.FromErr(err)
+	}
 
 	// always run
-	//d.SetId(strconv.FormatInt(time.Now().Unix(), 10))
+	d.SetId(strconv.FormatInt(time.Now().Unix(), 10))
 
 	return diags
 }
