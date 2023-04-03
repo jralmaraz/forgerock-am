@@ -60,14 +60,14 @@ func dataSourceRealms() *schema.Resource {
 
 func dataSourceRealmsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
-	type Realm struct {
-		_id        string              `json:"_id"`
-		_rev       string              `json:"_rev"`
-		parentpath interface{}         `json:"parentpath"`
-		active     bool                `json:"active"`
-		name       string              `json:"name"`
-		aliases    []map[string]string `json:"aliases"`
-	}
+	// type Realm struct {
+	// 	_id        string              `json:"_id"`
+	// 	_rev       string              `json:"_rev"`
+	// 	parentpath interface{}         `json:"parentpath"`
+	// 	active     bool                `json:"active"`
+	// 	name       string              `json:"name"`
+	// 	aliases    []map[string]string `json:"aliases"`
+	// }
 
 	type Response struct {
 		Result []struct {
