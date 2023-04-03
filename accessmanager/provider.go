@@ -25,14 +25,30 @@ func Provider() *schema.Provider {
 				Sensitive:   true,
 				DefaultFunc: schema.EnvDefaultFunc("XOpenAMPassword", nil),
 			},
-			//"amadminSsotoken": &schema.Schema{
-			//	Type:        schema.TypeString,
-			//	Optional:    true,
-			//	Sensitive:   true,
-			//	DefaultFunc: schema.EnvDefaultFunc("iplanetDirectoryPro", nil),
-			//},
 		},
-		ResourcesMap: map[string]*schema.Resource{},
+		ResourcesMap: map[string]*schema.Resource{
+			"realm": &schema.Resource{
+				Create: resourceRealmCreate,
+				Schema: map[string]*schema.Schema{
+					"name": &schema.Schema{
+						Type:     schema.TypeString,
+						Required: true,
+					},
+					"parent_path": &schema.Schema{
+						Type:     schema.TypeString,
+						Required: true,
+					},
+					"active": &schema.Schema{
+						Type:     schema.TypeBool,
+						Required: true,
+					},
+					"aliases": &schema.Schema{
+						Type:     schema.TypeList,
+						Required: true,
+					},
+				},
+			},
+		},
 		DataSourcesMap: map[string]*schema.Resource{
 			"accessmanager_realms": dataSourceRealms(),
 		},
