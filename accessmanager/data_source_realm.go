@@ -103,7 +103,7 @@ func dataSourceRealmsRead(ctx context.Context, d *schema.ResourceData, m interfa
 		return diag.FromErr(err)
 	}
 
-	realms := new(Response)
+	realms := new(amclient.Response)
 
 	if err := json.Unmarshal(r, &realms); err != nil {
 		diag.FromErr(err)
