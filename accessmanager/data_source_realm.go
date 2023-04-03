@@ -60,31 +60,6 @@ func dataSourceRealms() *schema.Resource {
 
 func dataSourceRealmsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
-	// type Realm struct {
-	// 	_id        string              `json:"_id"`
-	// 	_rev       string              `json:"_rev"`
-	// 	parentpath interface{}         `json:"parentpath"`
-	// 	active     bool                `json:"active"`
-	// 	name       string              `json:"name"`
-	// 	aliases    []map[string]string `json:"aliases"`
-	// }
-
-	type Response struct {
-		Result []struct {
-			_id        string              `json:"_id"`
-			_rev       string              `json:"_rev"`
-			parentpath string              `json:"parentpath"`
-			active     bool                `json:"active"`
-			name       string              `json:"name"`
-			aliases    []map[string]string `json:"aliases"`
-		} `json:"result"`
-		ResultCount             int         `json:"resultCount"`
-		PagedResultsCookie      interface{} `json:"pagedResultsCookie"`
-		TotalPagedResultsPolicy string      `json:"totalPagedResultsPolicy"`
-		TotalPagedResults       int         `json:"totalPagedResults"`
-		RemainingPagedResults   int         `json:"remainingPagedResults"`
-	}
-
 	client := m.(*amclient.Client)
 
 	// client.Transport = logging.NewTransport("ForgeRock", client.Transport)
@@ -106,7 +81,7 @@ func dataSourceRealmsRead(ctx context.Context, d *schema.ResourceData, m interfa
 	realms := new(amclient.Response)
 
 	if err := json.Unmarshal(r, &realms); err != nil {
-		diag.FromErr(err)
+		return diag.FromErr(err)
 	}
 
 	if len(realms.Result) == 0 {
@@ -114,16 +89,12 @@ func dataSourceRealmsRead(ctx context.Context, d *schema.ResourceData, m interfa
 		if err := d.Set("realms", []interface{}{}); err != nil {
 			return diag.FromErr(err)
 		}
+	} else {
+		//│ Error: realms: '': source data must be an array or slice, got struct
+		if err := d.Set("realms", realms.Result); err != nil {
+			return diag.FromErr(err)
+		}
 	}
-
-	// realmSlice := make([]map[string]interface{}, len(realms.Result))
-
-	//TODO: FIX mapping
-	//│ Error: realms: '': source data must be an array or slice, got struct
-	if err := d.Set("realms", realms.Result); err != nil {
-		return diag.FromErr(err)
-	}
-
 	// always run
 	d.SetId(strconv.FormatInt(time.Now().Unix(), 10))
 
