@@ -59,7 +59,6 @@ func dataSourceRealms() *schema.Resource {
 }
 
 func dataSourceRealmsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-
 	client := m.(*amclient.Client)
 
 	// client.Transport = logging.NewTransport("ForgeRock", client.Transport)
@@ -90,8 +89,7 @@ func dataSourceRealmsRead(ctx context.Context, d *schema.ResourceData, m interfa
 			return diag.FromErr(err)
 		}
 	} else {
-		//│ Error: realms: '': source data must be an array or slice, got struct
-		if err := d.Set("realms", realms.Result); err != nil {
+		if err := d.Set("realms", mapResponseResult(&realms.Result)); err != nil {
 			return diag.FromErr(err)
 		}
 	}
@@ -99,4 +97,30 @@ func dataSourceRealmsRead(ctx context.Context, d *schema.ResourceData, m interfa
 	d.SetId(strconv.FormatInt(time.Now().Unix(), 10))
 
 	return diags
+}
+
+func mapResponseResult(result *[]amclient.Realm) []interface{} {
+	if result != nil {
+		realms := make([]interface{}, len(*result), len(*result))
+
+		for i, realm := range *result {
+			realms[i] = mapRealm(realm)
+		}
+
+		return realms
+	}
+
+	return make([]interface{}, 0)
+}
+
+func mapRealm(realm amclient.Realm) map[string]interface{} {
+	r := make(map[string]interface{})
+	r["_id"] = realm.ID
+	r["_rev"] = realm.Rev
+	r["parentpath"] = realm.ParentPath
+	r["active"] = realm.Active
+	r["name"] = realm.Name
+	r["aliases"] = realm.Aliases
+
+	return r
 }
