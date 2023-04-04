@@ -5,10 +5,6 @@ go 1.19
 // github.com/hashicorp/terraform v0.12.29
 require github.com/hashicorp/terraform-plugin-sdk/v2 v2.25.0
 
-require github.com/jralmaraz/forgerock-go-sdk v0.0.3-0.unpublished
-
-replace github.com/jralmaraz/forgerock-go-sdk v0.0.3-0.unpublished => ../forgerock-go-sdk
-
 require (
 	github.com/agext/levenshtein v1.2.2 // indirect
 	github.com/apparentlymart/go-textseg/v13 v13.0.0 // indirect
@@ -49,3 +45,7 @@ require (
 	google.golang.org/grpc v1.51.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 )
+
+require github.com/jralmaraz/forgerock-go-sdk v0.0.4
+
+// replace github.com/jralmaraz/forgerock-go-sdk v0.0.3-0.unpublished => ../forgerock-go-sdk
