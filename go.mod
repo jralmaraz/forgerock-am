@@ -46,6 +46,6 @@ require (
 	google.golang.org/protobuf v1.28.1 // indirect
 )
 
-require github.com/jralmaraz/forgerock-go-sdk v0.0.4
+require github.com/jralmaraz/forgerock-go-sdk v0.0.5
 
 // replace github.com/jralmaraz/forgerock-go-sdk v0.0.3-0.unpublished => ../forgerock-go-sdk

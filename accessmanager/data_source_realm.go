@@ -2,9 +2,6 @@ package accessmanager
 
 import (
 	"context"
-	"encoding/json"
-	"fmt"
-	"net/http"
 	"strconv"
 	"time"
 
@@ -65,21 +62,8 @@ func dataSourceRealmsRead(ctx context.Context, d *schema.ResourceData, m interfa
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/am/json/global-config/realms?_queryFilter=true", client.HostURL), nil)
+	realms, err := client.GetRealms()
 	if err != nil {
-		return diag.FromErr(err)
-	}
-
-	//Just to test without releasing a new client version
-	req.Header.Set("Accept-API-Version", "resource=1.0, protocol=2.1")
-	r, err := client.DoRequest(req)
-	if err != nil {
-		return diag.FromErr(err)
-	}
-
-	realms := new(amclient.Response)
-
-	if err := json.Unmarshal(r, &realms); err != nil {
 		return diag.FromErr(err)
 	}
 
