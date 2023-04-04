@@ -2,7 +2,6 @@ package accessmanager
 
 import (
 	"context"
-	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -48,14 +47,8 @@ func dataSourceRealms() *schema.Resource {
 						"aliases": {
 							Type:     schema.TypeList,
 							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-									"alias": {
-										Type:     schema.TypeString,
-										Computed: true,
-										Optional: true,
-									},
-								},
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
 							},
 						},
 					},
@@ -67,29 +60,7 @@ func dataSourceRealms() *schema.Resource {
 
 func dataSourceRealmsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
-	type Response struct {
-		Result []struct {
-			ID         string      `json:"_id"`
-			Rev        string      `json:"_rev"`
-			ParentPath interface{} `json:"parentPath"`
-			Active     bool        `json:"active"`
-			Name       string      `json:"name"`
-			Aliases    []string    `json:"aliases"`
-		} `json:"result"`
-		ResultCount             int         `json:"resultCount"`
-		PagedResultsCookie      interface{} `json:"pagedResultsCookie"`
-		TotalPagedResultsPolicy string      `json:"totalPagedResultsPolicy"`
-		TotalPagedResults       int         `json:"totalPagedResults"`
-		RemainingPagedResults   int         `json:"remainingPagedResults"`
-	}
-
 	client := m.(*amclient.Client)
-
-	client.HTTPClient.Transport = &http.Transport{
-		TLSClientConfig: &tls.Config{
-			InsecureSkipVerify: true, // test server certificate is not trusted.
-		},
-	}
 
 	// client.Transport = logging.NewTransport("ForgeRock", client.Transport)
 	// Warning or errors can be collected in a slice type
@@ -107,28 +78,23 @@ func dataSourceRealmsRead(ctx context.Context, d *schema.ResourceData, m interfa
 		return diag.FromErr(err)
 	}
 
-	//realms := make([]map[string]interface{}, 0)
-	realms := new(Response)
+	realms := new(amclient.Response)
 
 	if err := json.Unmarshal(r, &realms); err != nil {
-		diag.FromErr(err)
-		//log.Output(2, err)
-
-	}
-
-	for i := range realms.Result {
-		fmt.Printf("%v\n", realms.Result[i])
-	}
-
-	//err = json.NewDecoder(r.Body).Decode(&realms)
-	//if err != nil {
-	//	return diag.FromErr(err)
-	//}
-
-	if err := d.Set("realms", realms); err != nil {
 		return diag.FromErr(err)
 	}
 
+	if len(realms.Result) == 0 {
+		// Set an empty slice to the 'realms' key
+		if err := d.Set("realms", []interface{}{}); err != nil {
+			return diag.FromErr(err)
+		}
+	} else {
+		//│ Error: realms: '': source data must be an array or slice, got struct
+		if err := d.Set("realms", realms.Result); err != nil {
+			return diag.FromErr(err)
+		}
+	}
 	// always run
 	d.SetId(strconv.FormatInt(time.Now().Unix(), 10))
 
