@@ -17,6 +17,8 @@ vendor/
 # Terraform files
 .terraform
 .terraform.lock.hcl
+*.tfstate
+*.tfstate.*
 
 # VSCode config
 .vscode/
