@@ -16,7 +16,8 @@ Resources would cover managing configurations for the following products:
 
 ## ToC
 1. [SDK](#sdk)
-
+2. [Debugging](#debugging)
+3. [Test](#test)
 
 # SDK
 
