@@ -73,8 +73,8 @@ github.com/hashicorp/terraform-svchost v0.0.0-20200729002733-f050f53b9734/go.mod
 github.com/hashicorp/yamux v0.0.0-20181012175058-2f1d1f20f75d h1:kJCB4vdITiW1eC1vq2e6IsrXKrZit1bv/TDYFGMp4BQ=
 github.com/hashicorp/yamux v0.0.0-20181012175058-2f1d1f20f75d/go.mod h1:+NfK9FKeTrX5uv1uIXGdwYDTeHna2qgaIlx54MXqjAM=
 github.com/jhump/protoreflect v1.6.0 h1:h5jfMVslIg6l29nsMs0D8Wj17RDVdNYti0vDN/PZZoE=
-github.com/jralmaraz/forgerock-go-sdk v0.0.4 h1:ymEvvnrOG2zdrdRHIC9HqHdgUL5NRCffPNeEAGrsE/c=
-github.com/jralmaraz/forgerock-go-sdk v0.0.4/go.mod h1:fJBNCo3MjJyhy1P8nn/6CbCc39oiC1J/xx/cE3mzekg=
+github.com/jralmaraz/forgerock-go-sdk v0.0.5 h1:XLterSiJXTSiZL7+QKn4eOb4oRUDORZ3FYqXim7Li4o=
+github.com/jralmaraz/forgerock-go-sdk v0.0.5/go.mod h1:fJBNCo3MjJyhy1P8nn/6CbCc39oiC1J/xx/cE3mzekg=
 github.com/kr/pretty v0.1.0 h1:L/CwN0zerZDmRFUapSPitk6f+Q3+0za1rQkzVuMiMFI=
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
