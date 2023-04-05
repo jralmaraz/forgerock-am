@@ -1,4 +1,4 @@
-module github.com/jralmaraz/forgerock-am
+module terraform-provider-forgerock-am
 
 go 1.19
 
